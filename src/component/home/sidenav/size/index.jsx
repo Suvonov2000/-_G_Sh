@@ -9,7 +9,6 @@ const Size = () => {
     "w-full flex justify-between items-center mt-[7px] text-[#46A358] cursor-pointer";
 
   const selectedSize = getParams("size") ?? "small";
-
   return (
     <div className="mt-[40px]">
       <h3 className="font-bold">Size</h3>
@@ -24,7 +23,7 @@ const Size = () => {
 
         <div
           onClick={() => setParams({ size: "medium" })}
-          className={selectedSize === "medium " ? active_text : normal_text}
+          className={selectedSize === "medium" ? active_text : normal_text}
         >
           <h3>Medium</h3>
           <h3>(12)</h3>

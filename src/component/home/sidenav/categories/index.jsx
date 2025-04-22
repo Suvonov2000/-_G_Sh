@@ -1,25 +1,21 @@
 import { Skeleton } from "antd";
 import axios from "axios";
-import { useEffect, useState } from "react";
+
 import { useSearchParams } from "../../../../hooks/useSearchParams";
+import { useQuery } from "@tanstack/react-query";
+import { useAxios } from "../../../../hooks/useaxois";
 
 const Categories = () => {
+  const axios = useAxios();
   const { getParams, setParams } = useSearchParams();
 
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      setLoading(true);
-      const { data } = await axios({
-        url: "https://greenshopapi.rakhmatov1020.uz/api/flower/category?access_token=64bebc1e2c6d3f056a8c85b7",
-        method: "GET",
-      });
-      setLoading(false);
-      setCategories(data.data);
-    })();
-  }, []);
+  const { data, isLoading } = useQuery({
+    queryKey: "categories",
+    queryFn: async () => {
+      const { data } = await axios({ url: "/flower/category" });
+      return data.data;
+    },
+  });
 
   const selectedCategory = getParams("category") ?? "house-plants";
   const normal_text =
@@ -31,13 +27,13 @@ const Categories = () => {
     <div>
       <h3 className="font-bold">Categories</h3>
       <div className="pl-[12px] w-full">
-        {loading
+        {isLoading
           ? Array.from({ length: 10 }).map((_, idx) => (
               <Skeleton.Input block key={idx} />
             ))
-          : categories.map((category) => (
+          : data.map((category) => (
               <div
-                key={categories._id}
+                key={category._id}
                 className={
                   selectedCategory === category.route_path
                     ? active_text
@@ -49,40 +45,6 @@ const Categories = () => {
                 <h3>({category.count})</h3>
               </div>
             ))}
-        {/* <div className="flex items-center justify-between mt-[7px] hover:text-[#46A358] cursor-pointer">
-          <h3>House Plants</h3>
-          <h3>(12)</h3>
-        </div>
-
-        <div className="flex items-center justify-between mt-[7px] hover:text-[#46A358] cursor-pointer">
-          <h3>House Plants</h3>
-          <h3>(12)</h3>
-        </div>
-
-        <div className="flex items-center justify-between mt-[7px] hover:text-[#46A358] cursor-pointer">
-          <h3>House Plants</h3>
-          <h3>(12)</h3>
-        </div>
-
-        <div className="flex items-center justify-between mt-[7px] hover:text-[#46A358] cursor-pointer">
-          <h3>House Plants</h3>
-          <h3>(12)</h3>
-        </div>
-
-        <div className="flex items-center justify-between mt-[7px] hover:text-[#46A358] cursor-pointer">
-          <h3>House Plants</h3>
-          <h3>(12)</h3>
-        </div>
-
-        <div className="flex items-center justify-between mt-[7px] hover:text-[#46A358] cursor-pointer">
-          <h3>House Plants</h3>
-          <h3>(12)</h3>
-        </div>
-
-        <div className="flex items-center justify-between mt-[7px] hover:text-[#46A358] cursor-pointer">
-          <h3>House Plants</h3>
-          <h3>(12)</h3>
-        </div> */}
       </div>
     </div>
   );
