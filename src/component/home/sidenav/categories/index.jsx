@@ -1,5 +1,4 @@
 import { Skeleton } from "antd";
-import axios from "axios";
 
 import { useSearchParams } from "../../../../hooks/useSearchParams";
 import { useQuery } from "@tanstack/react-query";

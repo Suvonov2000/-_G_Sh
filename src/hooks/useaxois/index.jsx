@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const useAxios = () => {
-  return async ({ url, method = "GET", headers, data }) => {
+  return async ({ url, method = "GET", params, data, headers }) => {
     return await axios({
       url: `https://greenshopapi.rakhmatov1020.uz//api${url}`,
       method,
@@ -11,7 +11,7 @@ export const useAxios = () => {
       },
       data,
       headers: {
-        Authorization: `Bearer${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         ...headers,
       },
     });
