@@ -2,13 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "../../../../hooks/useSearchParams";
 import { useAxios } from "../../../../hooks/useaxois";
 import Card from "./card";
+import Loading from "./card/loading";
 
 const Body = () => {
   const axois = useAxios();
   const { getParams } = useSearchParams();
   const category = getParams("category") ?? "house-plants";
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: [category],
     queryFn: async () => {
       const { data } = await axois({
@@ -20,9 +21,9 @@ const Body = () => {
 
   return (
     <div className="flex flex-wrap gap-4 ">
-      {data?.map((item) => (
-        <Card key={item.id} {...item} />
-      ))}
+      {isLoading
+        ? Array.from({ length: 15 }).map((_idx) => <Loading />)
+        : data?.map((item) => <Card key={item.id} {...item} />)}
     </div>
   );
 };
