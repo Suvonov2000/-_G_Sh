@@ -1,4 +1,4 @@
-import SliderSection from "../carousel";
+import SliderSection from "./carousel";
 import Category from "./category";
 import SideNav from "./sidenav";
 

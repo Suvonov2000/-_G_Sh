@@ -1,5 +1,5 @@
 import { Carousel } from "antd";
-import { carousel_mock } from "../../utils/mock";
+import { carousel_mock } from "../../../utils/mock";
 import Sliders from "./slide";
 
 const SliderSection = () => {

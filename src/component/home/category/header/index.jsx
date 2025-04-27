@@ -4,8 +4,8 @@ import { useSearchParams } from "../../../../hooks/useSearchParams";
 const Header = () => {
   const { setParams, getParams } = useSearchParams();
 
-  const type = getParams("type");
-  const sort = getParams("sort");
+  const type = getParams("type") ?? "all-plants";
+  const sort = getParams("sort") ?? "default-sorting";
 
   const options = [
     {
@@ -14,11 +14,11 @@ const Header = () => {
     },
     {
       value: "the-cheapest",
-      label: "The cheapest",
+      label: "The Cheapest",
     },
     {
-      value: "most-expansive",
-      label: "Most expansive",
+      value: "most-expensive",
+      label: "Most Expensive",
     },
   ];
 
@@ -54,10 +54,12 @@ const Header = () => {
       <div className="flex items-center gap-2">
         <h3>Sort by:</h3>
         <Select
-          labelInValue
-          defaultValue={options?.filter((item) => item.value === sort)}
-          onChange={(value) => setParams({ sort: value.value })}
-          style={{ width: 150 }}
+          // defaultValue={{ value: sort }}
+          value={options?.filter((item) => item.value === sort)[0]}
+          onChange={(value) => setParams({ sort: value })}
+          style={{
+            width: 150,
+          }}
           options={options}
         />
       </div>
